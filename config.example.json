@@ -1,0 +1,40 @@
+{
+  "llm": {
+    "primary": {
+      "provider": "ollama",
+      "model": "qwen2.5:32b",
+      "baseUrl": "http://localhost:11434"
+    },
+    "fallback": {
+      "provider": "groq",
+      "model": "llama-3.3-70b-versatile",
+      "apiKey": "gsk_your_key_here"
+    },
+    "maxContextTokens": 16384,
+    "compactThreshold": 0.8
+  },
+  "tools": {
+    "shell": {
+      "enabled": true,
+      "workingDir": ".",
+      "timeout": 30000
+    },
+    "files": {
+      "enabled": true,
+      "allowedPaths": ["."]
+    }
+  },
+  "safety": {
+    "blockedPatterns": [
+      "rm -rf /",
+      "mkfs",
+      "> /dev/sd",
+      "dd if=",
+      ":(){:|:&};:"
+    ],
+    "requireApproval": true
+  },
+  "session": {
+    "dir": ".clawlite/sessions"
+  }
+}

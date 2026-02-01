@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawLite - Lightweight agent framework for local LLMs</title>
+  <meta name="description" content="A lightweight CLI agent framework built for local small LLMs. OpenClaw architecture, stripped to what matters.">
+  <meta property="og:title" content="ClawLite">
+  <meta property="og:description" content="Lightweight agent framework for local LLMs. OpenClaw patterns, none of the weight.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clawlite.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ClawLite">
+  <meta name="twitter:description" content="Lightweight agent framework for local LLMs. OpenClaw patterns, none of the weight.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0c0a09;
+      color: #e7e5e4;
+      line-height: 1.6;
+    }
+
+    a { color: #fb7185; text-decoration: none; }
+    a:hover { color: #f43f5e; }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      padding: 20px 0;
+      border-bottom: 1px solid #1c1917;
+    }
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f5f5f4;
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: #fb7185; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: #a8a29e; font-size: 0.9rem; }
+    .nav-links a:hover { color: #fb7185; }
+
+    /* Hero */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #fb7185; }
+    .hero .tagline {
+      font-size: 1.25rem;
+      color: #a8a29e;
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Terminal */
+    .terminal {
+      background: #1c1917;
+      border: 1px solid #292524;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+      overflow-x: auto;
+    }
+    .terminal .prompt { color: #78716c; }
+    .terminal .cmd { color: #e7e5e4; }
+    .terminal .output { color: #a8a29e; }
+    .terminal .highlight { color: #fb7185; }
+
+    /* Why */
+    .why {
+      padding: 80px 0;
+      border-top: 1px solid #1c1917;
+    }
+    .why h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .why p {
+      color: #a8a29e;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      max-width: 640px;
+    }
+    .why .emphasis {
+      color: #d6d3d1;
+      font-weight: 500;
+    }
+
+    /* Features */
+    .features {
+      padding: 60px 0 80px;
+      border-top: 1px solid #1c1917;
+    }
+    .features h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      letter-spacing: -0.02em;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .feature {
+      background: #1c1917;
+      border: 1px solid #292524;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .feature h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #f5f5f4;
+    }
+    .feature p {
+      font-size: 0.9rem;
+      color: #78716c;
+    }
+    .feature .tag {
+      display: inline-block;
+      background: #292524;
+      color: #fb7185;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* Install */
+    .install {
+      padding: 60px 0 80px;
+      border-top: 1px solid #1c1917;
+      text-align: center;
+    }
+    .install h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+    .install-code {
+      background: #1c1917;
+      border: 1px solid #292524;
+      border-radius: 12px;
+      padding: 24px 32px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      display: inline-block;
+      text-align: left;
+      color: #a8a29e;
+      line-height: 2;
+    }
+    .install-code .cmd { color: #e7e5e4; }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid #1c1917;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #78716c;
+      font-size: 0.9rem;
+    }
+    .credit {
+      color: #44403c;
+      font-size: 0.8rem;
+      margin-top: 16px;
+    }
+    .credit a { color: #57534e; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.5rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="logo">claw<span>lite</span></div>
+      <div class="nav-links">
+        <a href="https://github.com/ziggybot/clawlite">GitHub</a>
+        <a href="https://github.com/ziggybot/clawlite#install">Install</a>
+        <a href="https://github.com/ziggybot/clawlite#architecture">Docs</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>claw<span>lite</span></h1>
+      <p class="tagline">Lightweight agent framework for local LLMs. OpenClaw patterns, none of the weight.</p>
+
+      <div class="terminal">
+        <div><span class="prompt">$</span> <span class="cmd">npx clawlite</span></div>
+        <div><span class="output">clawlite v0.1.0</span></div>
+        <div><span class="output">Primary: ollama/qwen2.5:32b</span></div>
+        <div><span class="output">Fallback: groq/llama-3.3-70b-versatile</span></div>
+        <div><span class="output">Tools: shell, read_file, write_file, edit_file</span></div>
+        <div><span class="output">Skills: 3 loaded</span></div>
+        <div>&nbsp;</div>
+        <div><span class="prompt">you ></span> <span class="cmd">find all TODO comments in the codebase</span></div>
+        <div><span class="output">  [tool: shell]</span></div>
+        <div>&nbsp;</div>
+        <div><span class="highlight">clawlite ></span> <span class="output">Found 14 TODOs across 8 files...</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="container">
+      <h2>Why we built this</h2>
+      <p>
+        We run <a href="https://ziggy.bot">Ziggy</a>, an autonomous AI agent on an NVIDIA DGX Spark. Qwen 2.5 32B, local inference, no cloud. When we looked at <a href="https://github.com/openclaw/openclaw">OpenClaw</a> for tool-calling and automation, the architecture was sound but the infrastructure was built for cloud-scale deployments.
+      </p>
+      <p>
+        <span class="emphasis">We needed the patterns without the weight.</span>
+      </p>
+      <p>
+        Lane-based serial execution. Context window guards. Skill files. Provider fallback. These are the things that make an agent reliable with a small quantised model. The gateway server, channel adapters, web dashboard, and browser automation are not.
+      </p>
+      <p>
+        ClawLite is what we extracted. ~500 lines of actual logic. Everything OpenClaw got right about agent reliability, nothing it got heavy about.
+      </p>
+      <p>
+        If you are running a local model and want an agent that can actually use tools without fumbling, this is for you.
+      </p>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <h2>What you get</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="tag">from OpenClaw</div>
+          <h3>Lane-based serial queue</h3>
+          <p>Serial by default, parallel only when you say so. No race conditions. No interleaved garbage.</p>
+        </div>
+        <div class="feature">
+          <div class="tag">from OpenClaw</div>
+          <h3>SKILL.md files</h3>
+          <p>Drop markdown in skills/ to shape behaviour. Trigger keywords for dynamic loading. Configure with text, not code.</p>
+        </div>
+        <div class="feature">
+          <div class="tag">from OpenClaw</div>
+          <h3>Persistent approvals</h3>
+          <p>Approve a shell command once, it remembers. No re-prompting every session for the same git push.</p>
+        </div>
+        <div class="feature">
+          <div class="tag">small LLM optimised</div>
+          <h3>Context window guard</h3>
+          <p>Automatic compaction at 80%. Summarises older turns before you hit the wall. Critical at 16K context.</p>
+        </div>
+        <div class="feature">
+          <div class="tag">small LLM optimised</div>
+          <h3>One tool call per turn</h3>
+          <p>Small quants fumble parallel calls. Serial tool execution is more reliable with Qwen, Llama, Mistral.</p>
+        </div>
+        <div class="feature">
+          <div class="tag">resilience</div>
+          <h3>Provider fallback</h3>
+          <p>Ollama goes down, Groq API catches it. Automatically. No broken pipelines at 3am.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="install">
+    <div class="container">
+      <h2>Get started</h2>
+      <div class="install-code">
+        <div><span class="cmd">git clone https://github.com/ziggybot/clawlite</span></div>
+        <div><span class="cmd">cd clawlite && npm install</span></div>
+        <div><span class="cmd">cp config.example.json clawlite.config.json</span></div>
+        <div><span class="cmd">npm start</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://github.com/ziggybot/clawlite">GitHub</a>
+        <a href="https://x.com/ziggybotx">Ziggy on X</a>
+        <a href="https://ziggy.bot">ziggy.bot</a>
+        <a href="https://clawlite.com">ClawLite</a>
+      </div>
+      <p class="credit">
+        Built by <a href="https://ziggy.bot">Ziggy</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
